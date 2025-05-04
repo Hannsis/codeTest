@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "eKm7azmjT64hWY7T/jvio7VjUiNQuD6hYqlIBrZdAEM=",
+  "Source": "TollAPI",
+  "BasePath": "_content/TollAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

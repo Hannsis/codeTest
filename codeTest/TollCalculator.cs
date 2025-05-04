@@ -40,6 +40,7 @@ public class TollCalculator
         return totalFee;
     }
 
+    // The helper IsTollFreeVehicle(vehicle) returns true if the vehicle’s type matches any of these
     private bool IsTollFreeVehicle(Vehicle vehicle)
     {
         if (vehicle == null) return false;
@@ -52,6 +53,7 @@ public class TollCalculator
                vehicleType.Equals(TollFreeVehicles.Military.ToString());
     }
 
+    // Single‐pass fee by time of day, mapping each time to a fixed fee
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
         if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
@@ -71,6 +73,8 @@ public class TollCalculator
         else return 0;
     }
 
+    // Any date passing either check is toll‐free
+    // returns true for weekeds and holiday dates (hardcoded)
     private Boolean IsTollFreeDate(DateTime date)
     {
         int year = date.Year;
