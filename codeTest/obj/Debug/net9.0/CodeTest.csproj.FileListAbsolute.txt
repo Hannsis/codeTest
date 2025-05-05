@@ -1,5 +1,0 @@
-C:\Users\hannam\OneDrive - Stena\Documents\Projects\PrivateCodeStuff\learnDotNet\codeTest\obj\Debug\net9.0\CodeTest.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\hannam\OneDrive - Stena\Documents\Projects\PrivateCodeStuff\learnDotNet\codeTest\obj\Debug\net9.0\CodeTest.AssemblyInfoInputs.cache
-C:\Users\hannam\OneDrive - Stena\Documents\Projects\PrivateCodeStuff\learnDotNet\codeTest\obj\Debug\net9.0\CodeTest.AssemblyInfo.cs
-C:\Users\hannam\OneDrive - Stena\Documents\Projects\PrivateCodeStuff\learnDotNet\codeTest\obj\Debug\net9.0\CodeTest.csproj.CoreCompileInputs.cache
-C:\Users\hannam\OneDrive - Stena\Documents\Projects\PrivateCodeStuff\learnDotNet\codeTest\obj\Debug\net9.0\CodeTest.sourcelink.json
