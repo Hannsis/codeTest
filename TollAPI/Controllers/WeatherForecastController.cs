@@ -30,5 +30,12 @@ public class WeatherForecastController : ControllerBase
         var result = _weatherForecastService.Get();
         return result;
     }
-
+    
+    // this definition will allow me to have multiple endpoints in the same controller that respond to the HTTP get verb
+    [HttpGet("otherEndpoint")]
+    public WeatherForecast GetOtherEndpoint()
+    {
+        var result = _weatherForecastService.Get().First();
+        return result;
+    }
 }
