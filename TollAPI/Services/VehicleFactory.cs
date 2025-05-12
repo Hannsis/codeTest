@@ -1,0 +1,22 @@
+using TollAPI.Models;
+
+namespace TollAPI.Services;
+//  uses a switch on the incoming type string to return the correct Vehicle instance
+public class VehicleFactory
+{
+    public Vehicle CreateVehicle(string vehicleType)
+    {
+        return vehicleType.ToLower() switch
+        {
+            "car" => new Car(),
+            "motorbike" => new Motorbike(),
+            "tractor" => new Tractor(),
+            "emergency" => new Emergency(),
+            "diplomat" => new Diplomat(),
+            "foreign" => new Foreign(),
+            "military" => new Military(),
+            _ => throw new ArgumentException($"Unsupported vehicle type: {vehicleType}")
+        };
+        
+    }
+}
