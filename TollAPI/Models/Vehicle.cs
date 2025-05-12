@@ -7,17 +7,33 @@ public interface Vehicle {
     string GetVehicleType();
 }
 
-// this class defines vehicle car
+// ------------------------------------------------ // Implementations for each vehicle type // --------------------------------------------------
+
+
 public class Car : Vehicle {
-    public string GetVehicleType() { 
-        return "Car"; 
-    }
+    public string GetVehicleType() => "Car";
 }
 
-// this class defines vehicle motorbike
 public class Motorbike : Vehicle {
-    public string GetVehicleType() { 
-        return "Motorbike"; 
-    }
+    public string GetVehicleType() => "Motorbike";
 }
 
+public class Tractor : Vehicle {
+    public string GetVehicleType() => "Tractor";
+}
+
+public class Emergency : Vehicle {
+    public string GetVehicleType() => "Emergency";
+}
+
+public class Diplomat : Vehicle {
+    public string GetVehicleType() => "Diplomat";
+}
+
+public class Foreign : Vehicle {
+    public string GetVehicleType() => "Foreign";
+}
+
+public class Military : Vehicle {
+    public string GetVehicleType() => "Military";
+}
