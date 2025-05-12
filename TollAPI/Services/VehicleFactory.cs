@@ -1,7 +1,7 @@
+//  uses a switch on the incoming type string to return the correct Vehicle instance
 using TollAPI.Models;
 
 namespace TollAPI.Services;
-//  uses a switch on the incoming type string to return the correct Vehicle instance
 public class VehicleFactory
 {
     public Vehicle CreateVehicle(string vehicleType)

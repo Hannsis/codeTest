@@ -14,10 +14,10 @@ public class TollCalculator
      * @return - the total toll fee for that day
      */
 
-// method 
-        // (initially the first pass of the day).
-        // accumulates the day’s toll.
-        // loop for each date in array
+
+    // (initially the first pass of the day).
+    // accumulates the day’s toll.
+    // loop for each date in array
     public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
@@ -46,7 +46,6 @@ public class TollCalculator
         return totalFee;
     }
 
-    // Implementation‐bug: It uses date.Millisecond instead of something like date.Ticks or date.TimeOfDay.TotalMilliseconds, so as written minutes will almost always be zero!
     // Single‐pass fee by time of day, mapping each time to a fixed fee
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
@@ -93,12 +92,14 @@ public class TollCalculator
         }
         return false;
     }
+
     private bool IsTollFreeVehicle(Vehicle vehicle)
     {
         if (vehicle == null) return false;
         return vehicle.IsTollFree;
     }
-//check exemption types
+
+    //check exemption types
     private enum TollFreeVehicles
     {
         Motorbike = 0,

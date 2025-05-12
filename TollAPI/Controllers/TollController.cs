@@ -14,7 +14,7 @@ public class TollEventsController : ControllerBase
     private readonly TollCalculator _calculator;
     private readonly VehicleFactory _vehicleFactory;
     
-    // constructor injection
+    // constructor injection - tydligen bestpractice
     public TollEventsController(TollCalculator calculator, VehicleFactory vehicleFactory)
     {
         _calculator = calculator;
@@ -37,9 +37,9 @@ public class TollEventsController : ControllerBase
     }
 
     catch (ArgumentException ex)
-    // someone giving weird input
         {
-            // returns a 400 - dvs client side error
+        // someone giving weird input
+        // returns a 400 - dvs client side error
             return BadRequest(ex.Message);
         }
         catch (Exception ex)
