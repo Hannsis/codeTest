@@ -66,18 +66,6 @@ public class TollCalculator
         else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
         else return 0;
     }
-    // The helper IsTollFreeVehicle(vehicle) returns true if the vehicle’s type matches any of these
-    private bool IsTollFreeVehicle(Vehicle vehicle)
-    {
-        if (vehicle == null) return false;ö
-        String vehicleType = vehicle.GetVehicleType();
-        return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Military.ToString());
-    }
 
     // Any date passing either check is toll‐free
     // returns true for weekeds and holiday dates (hardcoded)
