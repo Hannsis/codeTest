@@ -1,6 +1,7 @@
 using TollAPI.Models;
 
 namespace TollAPI.Services;
+//  uses a switch on the incoming type string to return the correct Vehicle instance
 public class VehicleFactory
 {
     public Vehicle CreateVehicle(string vehicleType)
@@ -16,5 +17,6 @@ public class VehicleFactory
             "military" => new Military(),
             _ => throw new ArgumentException($"Unsupported vehicle type: {vehicleType}")
         };
+        
     }
 }

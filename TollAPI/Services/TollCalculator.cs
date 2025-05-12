@@ -18,9 +18,10 @@ public class TollCalculator
         // (initially the first pass of the day).
         // accumulates the day’s toll.
         // loop for each date in array
-        public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
+    public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
+        
         int totalFee = 0;
         foreach (DateTime date in dates)
         {
@@ -91,21 +92,11 @@ public class TollCalculator
         }
         return false;
     }
-    // The helper IsTollFreeVehicle(vehicle) returns true if the vehicle’s type matches any of these
-    // If vehicle is null, it lets you pay tolls (default to exempt? but here it doesn’t).
     private bool IsTollFreeVehicle(Vehicle vehicle)
     {
         if (vehicle == null) return false;
-        string type = vehicle.GetVehicleType();
-
-        return type.Equals("Motorbike")
-            || type.Equals("Tractor")
-            || type.Equals("Emergency")
-            || type.Equals("Diplomat")
-            || type.Equals("Foreign")
-            || type.Equals("Military");
+        return vehicle.IsTollFree;
     }
-
 //check exemption types
     private enum TollFreeVehicles
     {
