@@ -10,8 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<TollCalculator>();
 builder.Services.AddScoped<VehicleFactory>();
 
-builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>(); 
-
 // if i reference hte interface i must reference the concrete type inside constructor( which is being used ) the DI cointainer
 // it will be injected properly
 
