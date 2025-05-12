@@ -1,5 +1,8 @@
 ﻿using TollAPI.Models;
+
+
 namespace TollAPI.Services;
+//main class
 public class TollCalculator
 {
 
@@ -11,9 +14,11 @@ public class TollCalculator
      * @return - the total toll fee for that day
      */
 
-// 
-
-    public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
+// method 
+        // (initially the first pass of the day).
+        // accumulates the day’s toll.
+        // loop for each date in array
+        public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
         int totalFee = 0;
@@ -39,7 +44,7 @@ public class TollCalculator
         if (totalFee > 60) totalFee = 60;
         return totalFee;
     }
-
+    // Implementation‐bug: It uses date.Millisecond instead of something like date.Ticks or date.TimeOfDay.TotalMilliseconds, so as written minutes will almost always be zero!
     // Single‐pass fee by time of day, mapping each time to a fixed fee
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
@@ -59,18 +64,6 @@ public class TollCalculator
         else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
         else return 0;
     }
-    // The helper IsTollFreeVehicle(vehicle) returns true if the vehicle’s type matches any of these
-    private bool IsTollFreeVehicle(Vehicle vehicle)
-    {
-        if (vehicle == null) return false;
-        String vehicleType = vehicle.GetVehicleType();
-        return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Military.ToString());
-    }
 
     // Any date passing either check is toll‐free
     // returns true for weekeds and holiday dates (hardcoded)
@@ -81,7 +74,7 @@ public class TollCalculator
         int day = date.Day;
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
-
+        // hardcoded year(?) future fixes remove hardcoded, add feature which uses a library? probs exists a library with dates and holidays
         if (year == 2013)
         {
             if (month == 1 && day == 1 ||
@@ -97,6 +90,20 @@ public class TollCalculator
             }
         }
         return false;
+    }
+    // The helper IsTollFreeVehicle(vehicle) returns true if the vehicle’s type matches any of these
+    // If vehicle is null, it lets you pay tolls (default to exempt? but here it doesn’t).
+    private bool IsTollFreeVehicle(Vehicle vehicle)
+    {
+        if (vehicle == null) return false;
+        string type = vehicle.GetVehicleType();
+
+        return type.Equals("Motorbike")
+            || type.Equals("Tractor")
+            || type.Equals("Emergency")
+            || type.Equals("Diplomat")
+            || type.Equals("Foreign")
+            || type.Equals("Military");
     }
 
 //check exemption types

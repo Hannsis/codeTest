@@ -34,7 +34,6 @@ public class TollEventsController : ControllerBase
         var vehicle = _vehicleFactory.CreateVehicle(TollFeeRequest.VehicleType);
         int totalFee = _calculator.GetTollFee(vehicle, TollFeeRequest.Dates);
         return Ok($"Toll fee calculated: {totalFee}, vehicle: {vehicle.GetVehicleType()}, dates passed: {string.Join(", ", TollFeeRequest.Dates)}");
-
     }
 
     catch (ArgumentException ex)
@@ -43,21 +42,12 @@ public class TollEventsController : ControllerBase
             // returns a 400 - dvs client side error
             return BadRequest(ex.Message);
         }
-
         catch (Exception ex)
         {
             // returns 500 errpr - dvs serverside error
             return StatusCode(500, "Something went wrong while calculating the toll fee.");
         }
-
     }
-    
-
-//sending POST: ASP.NET tries to convert the request body JSON to TollFeeRequest
-
 }
 
-
     // på sikt addera en till endpoint som tar emot flera TollFeeRequests
-    // try catch - GetTollFee
-    // return badRquest
