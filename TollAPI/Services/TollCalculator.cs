@@ -20,6 +20,9 @@ public class TollCalculator
     // loop for each date in array
     public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
     {
+        if (Vehicle == null || Vehicle.IsTollFree)
+        return 0;
+        
         DateTime intervalStart = dates[0];
         
         int totalFee = 0;

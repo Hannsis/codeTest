@@ -78,6 +78,51 @@ public class TollCalculatorTests
         // Assert
         Assert.Equal(18, total);
     }
+    
+    [Fact]
+    public void GetTollFee_NoPasses_ReturnsZero()
+    {
+        // Arrange
+        var mockVehicle = new Mock<Vehicle>();
+        mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
+        var vehicle = mockVehicle.Object;
+
+        var times = new[]
+        {
+            new DateTime()
+        };
+        var calculator = new TollCalculator();
+
+        // Act
+        var total = calculator.GetTollFee(vehicle, times);
+
+        // Assert
+        Assert.Equal(0, total);
+    }
+
+    
+    [Fact]
+    public void GetTollFee_NullVehicle_ReturnsZero()
+    {
+        // Arrange
+        var mockVehicle = new Mock<Vehicle>();
+        mockVehicle.SetupGet(v => v.IsTollFree).Returns(null);
+        var vehicle = mockVehicle.Object;
+
+        var times = new[]
+        {
+            new DateTime(2025, 5, 9, 7, 0, 0),
+            new DateTime(2025, 5, 9, 8, 0, 0)
+        };
+        var calculator = new TollCalculator();
+
+        // Act
+        var total = calculator.GetTollFee(vehicle, times);
+
+        // Assert
+        Assert.Equal(0, total);
+    }
+    // TEST FAILING
 
     [Fact]
     public void GetTollFee_MultiplOutsideSixtyMinutes_CalculateFee()
@@ -108,13 +153,9 @@ public class TollCalculatorTests
     //   Expected: 26
     //   Actual:   18
 
-    //MethodUnderTest_Scenario_ExpectedResult
-
-
-
-    // GetTollFee_NoPasses_ReturnsZero
-    // GetTollFee_NullVehicle_ReturnsZero
-
+ 
+    //TODO: fix logic so tests pass
+    
     // GetTollFee_SinglePass_BeforeChargeWindow_ReturnsZero         Pass at e.g. 05:59 on a weekday; expect 0.
     // GetTollFee_SinglePass_AtEachBoundary_ReturnsCorrectFee        tex. 06:00 → 8, 06:29 → 8, 06:30 → 13
     // GetTollFee_ExceedsDailyCap_ReturnsSixty
