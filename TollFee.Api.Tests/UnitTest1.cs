@@ -79,8 +79,49 @@ public class TollCalculatorTests
         Assert.Equal(18, total);
     }
 
+    [Fact]
+    public void GetTollFee_MultiplOutsideSixtyMinutes_CalculateFee()
+    {
+        // Arrange
+        var mockVehicle = new Mock<Vehicle>();
+        mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
+        var vehicle = mockVehicle.Object;
+
+        var times = new[]
+        {
+            new DateTime(2025, 5, 9, 7, 0, 0),   // 2025-05-09 07:00 -> fee 18
+            new DateTime(2025, 5, 9, 9, 0, 0)    // 2025-05-09 09:00 -> fee 8 (within 60 minutes)
+        };
+        var calculator = new TollCalculator();
+
+        // Act
+        var total = calculator.GetTollFee(vehicle, times);
+
+        // Assert
+        Assert.Equal(26, total);
+    }
+    // this test is returning error: 
+    // Error Message: Assert.Equal() Failure: Values differ
+    //   Expected: 26
+    //   Actual:   18
+    //   e: Values differ
+    //   Expected: 26
+    //   Actual:   18
+
+    //MethodUnderTest_Scenario_ExpectedResult
 
 
+
+    // GetTollFee_NoPasses_ReturnsZero
+    // GetTollFee_NullVehicle_ReturnsZero
+
+    // GetTollFee_SinglePass_BeforeChargeWindow_ReturnsZero         Pass at e.g. 05:59 on a weekday; expect 0.
+    // GetTollFee_SinglePass_AtEachBoundary_ReturnsCorrectFee        tex. 06:00 → 8, 06:29 → 8, 06:30 → 13
+    // GetTollFee_ExceedsDailyCap_ReturnsSixty
+    // GetTollFee_ExceedsDailyCap_ReturnsSixty
+    // Test a hard‐coded 2013 holiday
+    // Provide dates out of order but within 60 min; verify correct highest‐fee logic.
+    // dates out of order in general 
 
 }
 
