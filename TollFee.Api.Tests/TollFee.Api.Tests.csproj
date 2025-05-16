@@ -20,7 +20,6 @@
 
 <ItemGroup>
   <ProjectReference Include="..\TollAPI\TollAPI.csproj" />
-  <ProjectReference Include="..\TollAPI.csproj" />
 </ItemGroup>
 
 </Project>
