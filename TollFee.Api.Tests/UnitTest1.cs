@@ -35,7 +35,7 @@ public class TollCalculatorTests
 
     //writing test to test also true for toll free vehicle
     [Fact]
-    public void GetTollFee_SinglePass_NotBillable_ReturnsFee()
+    public void GetTollFee_SinglePass_NotBillable_ReturnsZero()
     {
         // Arrange
         var mockVehicle = new Mock<Vehicle>();
@@ -51,6 +51,7 @@ public class TollCalculatorTests
         // Assert
         Assert.Equal(0, total);
     }
+}
 
-    }
+
 
