@@ -30,28 +30,6 @@ public class TollCalculatorTests
         Assert.Equal(0, total);
     }
 
-    // [Fact]
-    // public void GetTollFee_SinglePass_Billable_ReturnsFee()
-    // // MethodUnderTest_Scenario_ExpectedResult
-    // {
-    //     // Arrange
-    //     var mockVehicle = new Mock<Vehicle>();
-
-    //     // Set up its IsTollFree property to false (dvs a car/motorbike wtv that pays toll, billable vehicle)
-    //     mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
-    //     var vehicle = mockVehicle.Object;
-
-    //     var date = new DateTime(2025, 5, 16, 7, 15, 0); // 7:15 => fee 18
-    //     var calculator = new TollCalculator();
-
-    //     // Act
-    //     // literally passing variables above into GetTollFee method and checking that the result is what it is
-    //     var total = calculator.GetTollFee(vehicle, new[] { date });
-
-    //     // Assert
-    //     Assert.Equal(18, total);
-    // }
-
     [Theory]
     [InlineData(7,  15, 18)]  //  07:00–07:59 18 kr
     [InlineData(6,  29,  8)]  //  06:00–06:29 8 kr
