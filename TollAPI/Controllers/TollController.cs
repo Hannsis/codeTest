@@ -6,7 +6,7 @@ using TollAPI.Services;
 namespace TollAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class TollEventsController : ControllerBase
 {
    
