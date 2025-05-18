@@ -9,6 +9,18 @@ namespace TollFee.Api.Tests
 {
     public class TollCalculatorTests
     {
+        public static IEnumerable<object[]> HolidayTests()
+        {
+            var jsonPath = Path.Combine(AppContext.BaseDirectory, "TestData", "HolidayTests.json");
+            var json = File.ReadAllText(jsonPath);
+            var docs = JsonConvert.DeserializeObject<List<TimeEntry>>(json);
+
+            return docs.Select(d => new object[]
+            {
+                new DateTime(2013, d.Month, d.Day, d.Hour, d.Minute, 0),
+                d.Fee
+            });
+        }
         public static IEnumerable<object[]> TestTimes()
         {
             var jsonPath = Path.Combine(AppContext.BaseDirectory, "TestData", "SingelPassTest.json");
@@ -24,7 +36,7 @@ namespace TollFee.Api.Tests
         public static IEnumerable<object[]> WithinSixtyData()
         {
             var json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "within60Tests.json"));
-            var docs = JsonConvert.DeserializeObject<List<Within60Entry>>(json);
+            var docs = JsonConvert.DeserializeObject<List<MultiplePasses>>(json);
             return docs.Select(d => new object[]
             {
                 d.Times
@@ -37,7 +49,7 @@ namespace TollFee.Api.Tests
         public static IEnumerable<object[]> OutsideSixtyData()
         {
             var json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "Outside60Tests.json"));
-            var docs = JsonConvert.DeserializeObject<List<Within60Entry>>(json);
+            var docs = JsonConvert.DeserializeObject<List<MultiplePasses>>(json);
             return docs.Select(d => new object[]
             {
                 d.Times
@@ -46,9 +58,6 @@ namespace TollFee.Api.Tests
                 d.ExpectedFee
             });
         }
-
-
-
 
         [Theory]
         [MemberData(nameof(TestTimes))]
@@ -109,6 +118,24 @@ namespace TollFee.Api.Tests
             Assert.Equal(expectedFee, total);
         }
 
+
+
+        [Theory]
+        [MemberData(nameof(HolidayTests))]
+        public void GetTollFee_HolidayTests_ReturnsZero(DateTime time, int expectedFee)
+        {
+            // Arrange
+            var vehicle = new Mock<Vehicle>();
+            vehicle.SetupGet(v => v.IsTollFree).Returns(false);
+            var calculator = new TollCalculator();
+
+            // Act
+            var total = calculator.GetTollFee(vehicle.Object, new[] { time });
+
+            // Assert
+            Assert.Equal(expectedFee, total);
+        }
+
         [Fact]
         public void GetTollFee_NoPasses_ReturnsZero()
         {
@@ -133,9 +160,10 @@ namespace TollFee.Api.Tests
         // GetTollFee_SinglePass_BeforeChargeWindow_ReturnsZero         Pass at e.g. 05:59 on a weekday; expect 0.
         // GetTollFee_SinglePass_AtEachBoundary_ReturnsCorrectFee        tex. 06:00 → 8, 06:29 → 8, 06:30 → 13
         // GetTollFee_ExceedsDailyCap_ReturnsSixty
-        // GetTollFee_ExceedsDailyCap_ReturnsSixty
-        // Test a hard‐coded 2013 holiday
+ 
         // Provide dates out of order but within 60 min; verify correct highest‐fee logic.
         // dates out of order in general 
+
+
     }
 }

@@ -5,72 +5,72 @@ namespace TollAPI.Services;
 //main class
 public class TollCalculator
 {
-
-    /**
-     * Calculate the total toll fee for one day
-     *
-     * @param vehicle - the vehicle
-     * @param dates   - date and time of all passes on one day
-     * @return - the total toll fee for that day
-     */
-
-
-    // (initially the first pass of the day).
-    // accumulates the day’s toll.
-    // loop for each date in array
-    public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
+    public int GetTollFee(Vehicle vehicle, DateTime[] dates)
     {
-        if (Vehicle == null || Vehicle.IsTollFree)
-        return 0;
+        if (vehicle.IsTollFree || dates == null || dates.Length == 0)
+            return 0;
+
+        var sortedDates = dates.OrderBy(d => d).ToArray();
+
+        DateTime windowStart  = sortedDates[0];
+        int      windowMaxFee = GetTollFee(windowStart, vehicle);
+        int      totalFee     = windowMaxFee;
         
-        DateTime intervalStart = dates[0];
-        
-        int totalFee = 0;
-        foreach (DateTime date in dates)
+        foreach (var date in sortedDates.Skip(1))
         {
-            int nextFee = GetTollFee(date, Vehicle);
-            int tempFee = GetTollFee(intervalStart, Vehicle);
+            int fee = GetTollFee(date, vehicle);
+            double mins = (date - windowStart).TotalMinutes;
 
-            long diffInMinutes = date.Minute - intervalStart.Minute;
-            // long minutes = diffInMinutes;
-
-            if (diffInMinutes <= 60)
+            if (mins <= 60)
             {
-                if (totalFee > 0) totalFee -= tempFee;
-                if (nextFee >= tempFee) tempFee = nextFee;
-                totalFee += tempFee;
+                if (fee > windowMaxFee)
+                {
+                    totalFee = totalFee - windowMaxFee + fee;
+                    windowMaxFee = fee;
+                }
             }
             else
             {
-                totalFee += nextFee;
+                totalFee += fee;
+                windowStart = date;
+                windowMaxFee = fee;
             }
         }
-        if (totalFee > 60) totalFee = 60;
-        return totalFee;
+        return Math.Min(totalFee, 60);
     }
 
-    // Single‐pass fee by time of day, mapping each time to a fixed fee
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
         if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
 
         int hour = date.Hour;
         int minute = date.Minute;
+        var t = date.TimeOfDay;
 
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
+        if      (t >= TimeSpan.FromHours( 6) && t < TimeSpan.FromHours( 6).Add(TimeSpan.FromMinutes(30)))    return  8;
+        // timespan fron 6 - 6.30
+        else if (t >= TimeSpan.FromHours(6).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(7)) return 13;
+        // timespan 6.30 - 7
+        else if (t >= TimeSpan.FromHours(7) && t < TimeSpan.FromHours(8)) return 18;
+        // 7 - 8
+        else if (t >= TimeSpan.FromHours(8) && t < TimeSpan.FromHours(8).Add(TimeSpan.FromMinutes(30))) return 13;
+        // 8 - 8.30
+        else if (t >= TimeSpan.FromHours(8).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(15)) return 8;
+        // 8.30 - 15.00
+        else if (t >= TimeSpan.FromHours(15) && t < TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30))) return 13;
+        // 15.00 - 15.30
+        else if (t >= TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(17)) return 18;
+        // 15.30 - 17
+        else if (t >= TimeSpan.FromHours(17) && t < TimeSpan.FromHours(18)) return 13;
+        // 17 - 18
+        else if (t >= TimeSpan.FromHours(18) && t < TimeSpan.FromHours(18).Add(TimeSpan.FromMinutes(30))) return 8;
+        // 18 - 18.30
         else return 0;
-    }
 
-    // Any date passing either check is toll‐free
-    // returns true for weekeds and holiday dates (hardcoded)
+    }
+    
+    // TODO: Replace hardcoded 2013 holiday list with a dynamic holiday calendar
+    // hardcoded year(?) future fixes remove hardcoded, add feature which uses a library? probs exists a library with dates and holidays
     private Boolean IsTollFreeDate(DateTime date)
     {
         int year = date.Year;
@@ -78,7 +78,6 @@ public class TollCalculator
         int day = date.Day;
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
-        // hardcoded year(?) future fixes remove hardcoded, add feature which uses a library? probs exists a library with dates and holidays
         if (year == 2013)
         {
             if (month == 1 && day == 1 ||

@@ -15,9 +15,32 @@
   },
   {
     "Times": [
-      { "Month": 5, "Day": 16, "Hour": 7, "Minute": 0  },
-      { "Month": 5, "Day": 16, "Hour": 15, "Minute": 29 }
+      { "Month": 5, "Day": 16, "Hour": 7, "Minute": 10  },
+      { "Month": 5, "Day": 16, "Hour": 8, "Minute": 0 }
     ],
-    "ExpectedFee": 31
+    "ExpectedFee": 18
+  },
+    {
+    "Times": [
+      { "Month": 5, "Day": 16, "Hour": 6, "Minute": 29  },
+      { "Month": 5, "Day": 16, "Hour": 6, "Minute": 30 },
+      { "Month": 5, "Day": 16, "Hour": 7, "Minute": 5}
+    ],
+    "ExpectedFee": 18
+  },
+    {
+    "Times": [
+      { "Month": 5, "Day": 16, "Hour": 7, "Minute": 0  },
+      { "Month": 5, "Day": 16, "Hour": 8, "Minute": 0 }
+    ],
+    "ExpectedFee": 18
+  },
+  {
+    "Times": [
+      { "Month": 5, "Day": 16, "Hour": 6, "Minute": 59  },
+      { "Month": 5, "Day": 16, "Hour": 8, "Minute": 0 }
+    ],
+    "ExpectedFee": 26
   }
+
 ]
