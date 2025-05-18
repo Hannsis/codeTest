@@ -9,7 +9,7 @@ public class TollCalculator
     {
         if (vehicle.IsTollFree || dates == null || dates.Length == 0)
             return 0;
-            
+
         var sortedDates = dates.OrderBy(d => d).ToArray();
 
         DateTime windowStart  = sortedDates[0];
@@ -46,16 +46,31 @@ public class TollCalculator
         int hour = date.Hour;
         int minute = date.Minute;
 
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        else return 0;
+        // if (hour == 6 && minute >= 0 && minute <= 29) return 8;
+        // else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
+        // else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
+        // else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
+        // else if (hour == 8 && minute >= 30) return 8;
+        // else if (hour >= 9 && hour <= 14) return 8;
+        // else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
+        // else if (hour == 15 && minute >= 30) return 18;
+        // else if (hour == 16) return 18;
+        // else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
+        // else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
+        // else return 0;
+        var t = date.TimeOfDay;
+
+        if      (t >= TimeSpan.FromHours( 6) && t < TimeSpan.FromHours( 6).Add(TimeSpan.FromMinutes(30)))    return  8;
+        else if (t >= TimeSpan.FromHours( 6).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours( 7))    return 13;
+        else if (t >= TimeSpan.FromHours( 7) && t < TimeSpan.FromHours( 8))                                  return 18;
+        else if (t >= TimeSpan.FromHours( 8) && t < TimeSpan.FromHours( 8).Add(TimeSpan.FromMinutes(30)))    return 13;
+        else if (t >= TimeSpan.FromHours( 8).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(15))    return  8;
+        else if (t >= TimeSpan.FromHours(15) && t < TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)))    return 13;
+        else if (t >= TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(17))    return 18;
+        else if (t >= TimeSpan.FromHours(17) && t < TimeSpan.FromHours(18))                                  return 13;
+        else if (t >= TimeSpan.FromHours(18) && t < TimeSpan.FromHours(18).Add(TimeSpan.FromMinutes(30)))    return  8;
+        else                                                                                                 return  0;
+
     }
 
     // Any date passing either check is toll‐free
