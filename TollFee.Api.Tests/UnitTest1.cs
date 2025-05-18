@@ -30,28 +30,58 @@ public class TollCalculatorTests
         Assert.Equal(0, total);
     }
 
-    [Fact]
-    public void GetTollFee_SinglePass_Billable_ReturnsFee()
-    // MethodUnderTest_Scenario_ExpectedResult
+    // [Fact]
+    // public void GetTollFee_SinglePass_Billable_ReturnsFee()
+    // // MethodUnderTest_Scenario_ExpectedResult
+    // {
+    //     // Arrange
+    //     var mockVehicle = new Mock<Vehicle>();
+
+    //     // Set up its IsTollFree property to false (dvs a car/motorbike wtv that pays toll, billable vehicle)
+    //     mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
+    //     var vehicle = mockVehicle.Object;
+
+    //     var date = new DateTime(2025, 5, 16, 7, 15, 0); // 7:15 => fee 18
+    //     var calculator = new TollCalculator();
+
+    //     // Act
+    //     // literally passing variables above into GetTollFee method and checking that the result is what it is
+    //     var total = calculator.GetTollFee(vehicle, new[] { date });
+
+    //     // Assert
+    //     Assert.Equal(18, total);
+    // }
+
+    [Theory]
+    [InlineData(7,  15, 18)]  //  07:00–07:59 18 kr
+    [InlineData(6,  29,  8)]  //  06:00–06:29 8 kr
+    [InlineData(8,  10, 13)]  // 08:00–08:29 13 kr
+    [InlineData(15, 15,  13)]  //  15:00–15:29 13 kr
+    [InlineData(18, 45, 0)]  //  18:30–05:59 0 kr
+    public void GetTollFee_SinglePass_Billable_ReturnsFee(
+        int hour,
+        int minute,
+        int Fee)
     {
         // Arrange
-        var mockVehicle = new Mock<Vehicle>();
+        var vehicle = new Mock<Vehicle>();
+        vehicle.SetupGet(v => v.IsTollFree).Returns(false);
 
-        // Set up its IsTollFree property to false (dvs a car/motorbike wtv that pays toll, billable vehicle)
-        mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
-        var vehicle = mockVehicle.Object;
-
-        var date = new DateTime(2025, 5, 16, 7, 15, 0); // 7:15 => fee 18
+        var date = new DateTime(2025, 5, 16, hour, minute, 0);
         var calculator = new TollCalculator();
 
         // Act
-        // literally passing variables above into GetTollFee method and checking that the result is what it is
-        var total = calculator.GetTollFee(vehicle, new[] { date });
+        var total = calculator.GetTollFee(vehicle.Object, new[] { date });
 
         // Assert
-        Assert.Equal(18, total);
+        Assert.Equal(Fee, total);
     }
+    
     // TODO - look into bool for true/false, not two seperate tests. But i'll do this when i have more tests which are working already 
+
+    // TODO - is there a way i can make a test which tests the singel time for all times in a day? like this is hardcoded for a specific time. But could i like, have a time document, and make the test loop through several times? 
+    // [Theory] + [InlineData] write in your attribute.
+    // [Theory] + MemberData (or ClassData) - Pull in aattribute
 
 
     //test many passes within 60 minutes
