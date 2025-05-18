@@ -31,14 +31,14 @@ public class TollCalculatorTests
     }
 
     [Theory]
-    [InlineData(6,  15, 8)]  // 06:00–06:29 8 kr
-    [InlineData(6,  30, 8)]  // 06:30–06:59 13 kr
+    [InlineData(6, 15, 8)]  // 06:00–06:29 8 kr
+    [InlineData(6, 30, 13)]  // 06:30–06:59 13 kr
     [InlineData(7, 15, 18)]  //  07:00–07:59 18 kr
-    [InlineData(8,  29,  13)] //  08:00–08:29 13 kr
-    [InlineData(8,  30,  8)] // 08:30–14:59 8 kr
+    [InlineData(8, 29, 13)] //  08:00–08:29 13 kr
+    [InlineData(8, 30, 8)] // 08:30–14:59 8 kr
         
-    [InlineData(15, 15,  13)] // 15:00–15:29 13 kr
-    [InlineData(18, 45, 18)] // 15:30–16:59 18 kr
+    [InlineData(15, 15, 13)] // 15:00–15:29 13 kr
+    [InlineData(15, 45, 18)] // 15:30–16:59 18 kr
     [InlineData(17, 45, 13)] // 17:00–17:59 13 kr
     [InlineData(18, 15, 8)] // 18:00–18:29 8 kr
     [InlineData(18, 45, 0)] // 18:30–05:59 0 kr
