@@ -3,6 +3,7 @@ using TollAPI.Models;
 using TollAPI.Services;
 using Xunit; 
 using Moq;
+using TollFeeAPI.Tests.TestModels;
 
 namespace TollFee.Api.Tests
 {
@@ -27,25 +28,12 @@ namespace TollFee.Api.Tests
             return docs.Select(d => new object[]
             {
                 d.Times
-                .Select(t => new DateTime(2025, t.Month, t.Day, t.Hour, t.Minute, 0))
+                .Select(t => new DateTime(2013, t.Month, t.Day, t.Hour, t.Minute, 0))
                 .ToArray(),
                 d.ExpectedFee
             });
         }
 
-        private class TimeEntry
-        {
-            public int Month { get; set; }
-            public int Day { get; set; }
-            public int Hour { get; set; }
-            public int Minute { get; set; }
-            public int Fee { get; set; }
-        }
-        private class Within60Entry
-        {
-            public List<TimeEntry> Times { get; set; }
-            public int ExpectedFee { get; set; }
-        }
 
         [Theory]
         [MemberData(nameof(TestTimes))]
