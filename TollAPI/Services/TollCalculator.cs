@@ -5,51 +5,40 @@ namespace TollAPI.Services;
 //main class
 public class TollCalculator
 {
-
-    /**
-     * Calculate the total toll fee for one day
-     *
-     * @param vehicle - the vehicle
-     * @param dates   - date and time of all passes on one day
-     * @return - the total toll fee for that day
-     */
-
-
-    // (initially the first pass of the day).
-    // accumulates the day’s toll.
-    // loop for each date in array
-    public int GetTollFee(Vehicle Vehicle, DateTime[] dates)
+    public int GetTollFee(Vehicle vehicle, DateTime[] dates)
     {
-        if (Vehicle == null || Vehicle.IsTollFree)
-        return 0;
+        if (vehicle.IsTollFree || dates == null || dates.Length == 0)
+            return 0;
+            
+        var sortedDates = dates.OrderBy(d => d).ToArray();
+
+        DateTime windowStart  = sortedDates[0];
+        int      windowMaxFee = GetTollFee(windowStart, vehicle);
+        int      totalFee     = windowMaxFee;
         
-        DateTime intervalStart = dates[0];
-        
-        int totalFee = 0;
-        foreach (DateTime date in dates)
+        foreach (var date in sortedDates.Skip(1))
         {
-            int nextFee = GetTollFee(date, Vehicle);
-            int tempFee = GetTollFee(intervalStart, Vehicle);
+            int fee = GetTollFee(date, vehicle);
+            double mins = (date - windowStart).TotalMinutes;
 
-            long diffInMinutes = date.Minute - intervalStart.Minute;
-            // long minutes = diffInMinutes;
-
-            if (diffInMinutes <= 60)
+            if (mins <= 60)
             {
-                if (totalFee > 0) totalFee -= tempFee;
-                if (nextFee >= tempFee) tempFee = nextFee;
-                totalFee += tempFee;
+                if (fee > windowMaxFee)
+                {
+                    totalFee = totalFee - windowMaxFee + fee;
+                    windowMaxFee = fee;
+                }
             }
             else
             {
-                totalFee += nextFee;
+                totalFee += fee;
+                windowStart = date;
+                windowMaxFee = fee;
             }
         }
-        if (totalFee > 60) totalFee = 60;
-        return totalFee;
+        return Math.Min(totalFee, 60);
     }
 
-    // Single‐pass fee by time of day, mapping each time to a fixed fee
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
         if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
