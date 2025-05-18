@@ -45,31 +45,27 @@ public class TollCalculator
 
         int hour = date.Hour;
         int minute = date.Minute;
-
-        // if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        // else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        // else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        // else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        // else if (hour == 8 && minute >= 30) return 8;
-        // else if (hour >= 9 && hour <= 14) return 8;
-        // else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        // else if (hour == 15 && minute >= 30) return 18;
-        // else if (hour == 16) return 18;
-        // else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        // else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        // else return 0;
         var t = date.TimeOfDay;
 
         if      (t >= TimeSpan.FromHours( 6) && t < TimeSpan.FromHours( 6).Add(TimeSpan.FromMinutes(30)))    return  8;
-        else if (t >= TimeSpan.FromHours( 6).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours( 7))    return 13;
-        else if (t >= TimeSpan.FromHours( 7) && t < TimeSpan.FromHours( 8))                                  return 18;
-        else if (t >= TimeSpan.FromHours( 8) && t < TimeSpan.FromHours( 8).Add(TimeSpan.FromMinutes(30)))    return 13;
-        else if (t >= TimeSpan.FromHours( 8).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(15))    return  8;
-        else if (t >= TimeSpan.FromHours(15) && t < TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)))    return 13;
-        else if (t >= TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(17))    return 18;
-        else if (t >= TimeSpan.FromHours(17) && t < TimeSpan.FromHours(18))                                  return 13;
-        else if (t >= TimeSpan.FromHours(18) && t < TimeSpan.FromHours(18).Add(TimeSpan.FromMinutes(30)))    return  8;
-        else                                                                                                 return  0;
+        // timespan fron 6 - 6.30
+        else if (t >= TimeSpan.FromHours(6).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(7)) return 13;
+        // timespan 6.30 - 7
+        else if (t >= TimeSpan.FromHours(7) && t < TimeSpan.FromHours(8)) return 18;
+        // 7 - 8
+        else if (t >= TimeSpan.FromHours(8) && t < TimeSpan.FromHours(8).Add(TimeSpan.FromMinutes(30))) return 13;
+        // 8 - 8.30
+        else if (t >= TimeSpan.FromHours(8).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(15)) return 8;
+        // 8.30 - 15.00
+        else if (t >= TimeSpan.FromHours(15) && t < TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30))) return 13;
+        // 15.00 - 15.30
+        else if (t >= TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)) && t < TimeSpan.FromHours(17)) return 18;
+        // 15.30 - 17
+        else if (t >= TimeSpan.FromHours(17) && t < TimeSpan.FromHours(18)) return 13;
+        // 17 - 18
+        else if (t >= TimeSpan.FromHours(18) && t < TimeSpan.FromHours(18).Add(TimeSpan.FromMinutes(30))) return 8;
+        // 18 - 18.30
+        else return 0;
 
     }
 
