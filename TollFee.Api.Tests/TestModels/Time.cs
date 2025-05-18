@@ -7,8 +7,9 @@ namespace TollFeeAPI.Tests.TestModels;
             public int Minute { get; set; }
             public int Fee { get; set; }
         }
-        internal class Within60Entry
+        internal class MultiplePasses
         {
             public List<TimeEntry> Times { get; set; }
             public int ExpectedFee { get; set; }
         }
+

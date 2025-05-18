@@ -68,9 +68,9 @@ public class TollCalculator
         else return 0;
 
     }
-
-    // Any date passing either check is toll‐free
-    // returns true for weekeds and holiday dates (hardcoded)
+    
+    // TODO: Replace hardcoded 2013 holiday list with a dynamic holiday calendar
+    // hardcoded year(?) future fixes remove hardcoded, add feature which uses a library? probs exists a library with dates and holidays
     private Boolean IsTollFreeDate(DateTime date)
     {
         int year = date.Year;
@@ -78,7 +78,6 @@ public class TollCalculator
         int day = date.Day;
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
-        // hardcoded year(?) future fixes remove hardcoded, add feature which uses a library? probs exists a library with dates and holidays
         if (year == 2013)
         {
             if (month == 1 && day == 1 ||
