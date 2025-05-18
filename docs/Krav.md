@@ -1,4 +1,5 @@
-Varje passage genom en betalstation i Göteborg kostar antingen 8, 13 eller 18 kronor beroende på tidpunkt. Det högsta beloppet per dag och fordon är 60 kronor.
+Varje passage genom en betalstation i Göteborg kostar antingen 8, 13 eller 18 kronor beroende på tidpunkt. 
+Det högsta beloppet per dag och fordon är 60 kronor.
 
 Tider och avgifter:
 06:00–06:29 8 kr
@@ -13,4 +14,9 @@ Tider och avgifter:
 18:00–18:29 8 kr
 18:30–05:59 0 kr
 
-Trängselskatt tas ut för fordon som passerar en betalstation måndag till fredag mellan 06:00 och 18:29. Ingen skatt tas ut på lördagar, helgdagar, dagar före helgdag eller under juli månad. Vissa fordon är undantagna från trängselskatt. Om en bil passerar flera betalstationer inom 60 minuter tas bara den högsta avgiften ut under den perioden.
+Trängselskatt tas ut för fordon som passerar en betalstation måndag till fredag mellan 06:00 och 18:29. 
+Ingen skatt tas ut på lördagar, helgdagar, dagar före helgdag eller under juli månad. 
+
+Vissa fordon är undantagna från trängselskatt. 
+
+Om en bil passerar flera betalstationer inom 60 minuter tas bara den högsta avgiften ut under den perioden.
