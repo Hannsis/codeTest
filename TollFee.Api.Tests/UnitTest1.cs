@@ -58,6 +58,19 @@ namespace TollFee.Api.Tests
                 d.ExpectedFee
             });
         }
+        
+        public static IEnumerable<object[]> ExceededHighestCap()
+        {
+            var json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "ExceededHighestCap.json"));
+            var docs = JsonConvert.DeserializeObject<List<MultiplePasses>>(json);
+            return docs.Select(d => new object[]
+            {
+                d.Times
+                .Select(t => new DateTime(2013, t.Month, t.Day, t.Hour, t.Minute, 0))
+                .ToArray(),
+                d.ExpectedFee
+            });
+        }
 
         [Theory]
         [MemberData(nameof(TestTimes))]
@@ -118,8 +131,6 @@ namespace TollFee.Api.Tests
             Assert.Equal(expectedFee, total);
         }
 
-
-
         [Theory]
         [MemberData(nameof(HolidayTests))]
         public void GetTollFee_HolidayTests_ReturnsZero(DateTime time, int expectedFee)
@@ -135,6 +146,19 @@ namespace TollFee.Api.Tests
             // Assert
             Assert.Equal(expectedFee, total);
         }
+        
+        [Theory]
+        [MemberData(nameof(ExceededHighestCap))]
+        public void GetTollFee_ExceedsDailyCap_ReturnsSixty(DateTime[] times, int expectedFee)
+        {
+            var mockVehicle = new Mock<Vehicle>();
+            mockVehicle.SetupGet(v => v.IsTollFree).Returns(false);
+            var calculator = new TollCalculator();
+
+            var total = calculator.GetTollFee(mockVehicle.Object, times);
+            Assert.Equal(expectedFee, total);
+        }
+
 
         [Fact]
         public void GetTollFee_NoPasses_ReturnsZero()
@@ -159,7 +183,6 @@ namespace TollFee.Api.Tests
 
         // GetTollFee_SinglePass_BeforeChargeWindow_ReturnsZero         Pass at e.g. 05:59 on a weekday; expect 0.
         // GetTollFee_SinglePass_AtEachBoundary_ReturnsCorrectFee        tex. 06:00 → 8, 06:29 → 8, 06:30 → 13
-        // GetTollFee_ExceedsDailyCap_ReturnsSixty
  
         // Provide dates out of order but within 60 min; verify correct highest‐fee logic.
         // dates out of order in general 
