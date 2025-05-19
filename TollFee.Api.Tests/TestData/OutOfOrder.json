@@ -1,0 +1,11 @@
+[
+  {
+    "Times": [
+    { "Month": 5, "Day": 16, "Hour": 7, "Minute": 0,  "Fee": 18 },
+    { "Month": 5, "Day": 16, "Hour": 6, "Minute": 15, "Fee": 8  },
+    { "Month": 5, "Day": 16, "Hour": 6, "Minute": 45, "Fee": 13 },
+    { "Month": 5, "Day": 16, "Hour": 6, "Minute": 30, "Fee": 13 }
+    ],
+    "ExpectedFee": 18
+  }
+]

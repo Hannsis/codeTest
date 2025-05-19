@@ -1,0 +1,17 @@
+[
+  {
+    "Times": [
+      { "Month": 5, "Day": 20, "Hour": 6,  "Minute": 10, "Fee": 8  },
+      { "Month": 5, "Day": 20, "Hour": 6,  "Minute": 40, "Fee": 13 },
+      { "Month": 5, "Day": 20, "Hour": 7,  "Minute": 50, "Fee": 18 },
+      { "Month": 5, "Day": 20, "Hour": 8,  "Minute": 20, "Fee": 13 },
+      { "Month": 5, "Day": 20, "Hour": 9,  "Minute": 0,  "Fee": 8  },
+      { "Month": 5, "Day": 20, "Hour": 15, "Minute": 10, "Fee": 13 },
+      { "Month": 5, "Day": 20, "Hour": 15, "Minute": 50, "Fee": 18 },
+      { "Month": 5, "Day": 20, "Hour": 17, "Minute": 0,  "Fee": 13 },
+      { "Month": 5, "Day": 20, "Hour": 17, "Minute": 30, "Fee": 13 },
+      { "Month": 5, "Day": 20, "Hour": 18, "Minute": 5,  "Fee": 8  }
+    ],
+    "ExpectedFee": 60
+  }
+]
