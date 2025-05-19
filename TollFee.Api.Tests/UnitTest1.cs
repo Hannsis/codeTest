@@ -33,17 +33,7 @@ namespace TollFee.Api.Tests
                 d.Fee
             });
         }
-        public static IEnumerable<object[]> SingelPassTest()
-        {
-            var jsonPath = Path.Combine(AppContext.BaseDirectory, "TestData", "SingelPassTest.json");
-            var json = File.ReadAllText(jsonPath);
-            var docs = JsonConvert.DeserializeObject<List<TimeEntry>>(json);
-            return docs.Select(d => new object[]
-            {
-                new DateTime(2013, d.Month, d.Day, d.Hour, d.Minute, 0),
-                d.Fee
-            });
-        }
+
         public static IEnumerable<object[]> WithinSixtyData()
         {
             var json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "within60Tests.json"));
@@ -131,23 +121,6 @@ namespace TollFee.Api.Tests
             Assert.Equal(0, total);
         }
 
-
-        [Theory]
-        [MemberData(nameof(SingelPassTest))]
-        public void GetTollFee_SinglePass_Billable_ReturnsFee(DateTime time, int expectedFee)
-        {
-            // Arrange
-            var vehicle = new Mock<Vehicle>();
-            vehicle.SetupGet(v => v.IsTollFree).Returns(false);
-            var calculator = new TollCalculator();
-
-            // Act
-            var total = calculator.GetTollFee(vehicle.Object, new[] { time });
-
-            // Assert
-            Assert.Equal(expectedFee, total);
-        }
-
         [Theory]
         [MemberData(nameof(TollBoundaries))]
         public void GetTollFee_SinglePass_AtEachBoundary_ReturnsCorrectFee (
@@ -164,6 +137,7 @@ namespace TollFee.Api.Tests
             // Assert
             Assert.Equal(expectedFee, total);
         }
+        
         [Theory]
         [MemberData(nameof(OutOfOrder))]
         public void GetTollFee_PassesOutOfOrder_CalculatesCorrectFee (DateTime[] times, int expectedFee)
@@ -243,7 +217,5 @@ namespace TollFee.Api.Tests
             // Assert
             Assert.Equal(expectedFee, total);
         }
-
-
     }
 }
