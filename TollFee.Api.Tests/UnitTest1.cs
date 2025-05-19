@@ -243,9 +243,6 @@ namespace TollFee.Api.Tests
             // Assert
             Assert.Equal(expectedFee, total);
         }
- 
-        // Provide dates out of order but within 60 min; verify correct highest‐fee logic.
-        // dates out of order in general 
 
 
     }
